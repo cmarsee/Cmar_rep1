@@ -17,6 +17,14 @@ group :development, :test do
 	gem 'rspec-rails'
 end
 
+group :test do
+    gem 'capybara'
+end
+
+group :development, :test do
+    gem 'rspec-rails'
+end
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
