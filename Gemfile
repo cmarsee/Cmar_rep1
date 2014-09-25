@@ -11,6 +11,7 @@ gem 'sass-rails', '~> 4.0.3'
 #capybara test
 group :test do
 	gem 'capybara'
+	gem 'factory_girl_rails'
 end
 #rspec test
 group :development, :test do
