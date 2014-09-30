@@ -27,6 +27,9 @@ class UsersController < ApplicationController
 	
 	def edit
 		@user = User.find(params[:id])
+  rescue
+		flash[:danger] = "Unable to find user"
+		redirect_to users_path
 	end
 	
 	def update
@@ -39,9 +42,16 @@ class UsersController < ApplicationController
 			render 'edit'
 		end
 	end
+    
+    def destroy
+        @user = User.find(params[:id])
+        @user.destroy
+        flash[:success] = "#{@user.name} removed from the site"
+        redirect_to users_path
+    end
   
   private
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end
