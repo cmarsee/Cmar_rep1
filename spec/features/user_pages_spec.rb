@@ -68,7 +68,7 @@ describe "User Pages" do
 		        fill_in 'Username', with: 'John Doe'
 		        fill_in 'Email', with: 'john.doe@example.com'
 		        fill_in 'Password', with: 'password'
-                fill_in 'Confirmation', with: 'password'
+            	        fill_in 'Confirmation', with: 'password'
             end
 
 	        it "allows the user to fill in the fields" do
@@ -105,7 +105,10 @@ describe "User Pages" do
 	    let!(:original_name) { user.name }
 	    let (:submit) { "Update user profile" }
 
-	    before { visit edit_user_path(user) }
+	    before do
+		    login user
+		    visit edit_user_path(user) 
+	    end
 
 	    it { should have_field('Username', with: user.name) }
 	    it { should have_field('Email', with: user.email) }
@@ -152,7 +155,7 @@ describe "User Pages" do
 		        fill_in 'Username', with: 'New Name'
 		        fill_in 'Email', with: 'new.name@example.com'
 		        fill_in 'Password', with: user.password
-                fill_in 'Confirmation', with: user.password
+                        fill_in 'Confirmation', with: user.password
 	        end
 
 	        describe "changes the data" do
@@ -165,9 +168,9 @@ describe "User Pages" do
 	        describe "redirects back to profile page", type: :request do
 		        before do
 		            patch user_path(user), user: { name: 'New Name',
-						                           email: 'new.name@example.com',
-						                           password: user.password,
-                        password_confirmation: user.password}
+						           email: 'new.name@example.com',
+						           password: user.password,
+                                                           password_confirmation: user.password}
                 end
 
 		        specify { expect(response).to redirect_to(user_path(user)) }

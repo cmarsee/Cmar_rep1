@@ -37,8 +37,7 @@ describe User do
     end
 
     describe "empty password" do
-        let (:unsaved_user) {
-        FactoryGirl.build(:user, password: '') }
+        let (:unsaved_user) { FactoryGirl.build(:user, password: '') }
 
         specify  { expect(unsaved_user).not_to be_valid }
     end
@@ -48,6 +47,7 @@ describe User do
         FactoryGirl.build(:user, password: ' ') }
 
 	specify  { expect(unsaved_user).not_to be_valid }
+
     end
 
     describe "long name" do
@@ -79,4 +79,5 @@ describe User do
 	    expect(duplicate).not_to be_valid
 	end
     end
+
 end

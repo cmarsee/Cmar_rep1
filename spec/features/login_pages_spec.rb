@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe " LoginPages" do
+describe "LoginPages" do
     subject { page }
     
     describe "SignIn page" do
         before { visit login_path }
         
-        it { should have_content ("Sign In") }
+        it { should have_content("Sign In") }
         
         describe "with invalid account information" do
             before { click_button "Log In" }
@@ -18,6 +18,7 @@ describe " LoginPages" do
                 
                 before do 
                     fill_in "Username", with: user.name
+		    fill_in "Password", with: 'garbage'
                     click_button "Log In"
                 end
                 
