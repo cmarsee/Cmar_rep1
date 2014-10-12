@@ -22,17 +22,6 @@ class UsersController < ApplicationController
 	    end
     end
 	
-	def create
-    @user = User.new(user_params)
-		if @user.save
-			flash[:success] = "Welcome to the site, #{@user.name}"
-			redirect_to @user
-		else
-			flash.now[:danger] = "Unable to create new user"
-			render "new"
-		end
-	end
-	
 	def show
 		@user = User.find(params[:id])
 	rescue
@@ -83,6 +72,7 @@ class UsersController < ApplicationController
 	    flash[:danger] = "Unable to find user"
 	    redirect_to users_path
     end
+    
     def ensure_admin
             unless current_user && current_user.admin?
                 flash[:danger] = "Only admins allowed to delete users"

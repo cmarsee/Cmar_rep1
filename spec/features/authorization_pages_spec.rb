@@ -17,16 +17,27 @@ describe 'AuthorizationPages' do
                 let(:direct_path) { user_path(user) }
                 let(:direct_http_method) { :delete }
             end
-	    end
+        end
     end
 
     describe "authenticated users" do
-	    describe "for Users controller" do
-	        describe "edit action" do
-		        before do
-		            login(user)
-		            visit edit_user_path(user)
-		        end
+        describe "for Users controller" do
+            describe "new action" do
+               it_behaves_like "redirect to root" do
+                    let (:login_user) { user }
+                    let (:browser_path) { new_user_path }
+                    let (:error_type) { :warning }
+                    let (:error_signature) { 'Sign up' }
+                    let (:direct_http_method) { :post }
+                    let (:direct_path) { users_path }
+                end
+            end
+
+            describe "edit action" do
+                before do
+                    login(user)
+                    visit edit_user_path(user)
+                end
 
 		        it { should_not have_alert(:warning) }
 		        it { should have_content('Edit profile') }
@@ -75,7 +86,16 @@ describe 'AuthorizationPages' do
 		        end
 
                 specify { expect(response.body).not_to have_alert(:danger) }
+	        end
+
+            describe "delete action (self)", type: :request do
+                it_behaves_like "redirect to root", skip_browser: true do
+                    let (:login_user) { admin }
+                    let (:error_type) { :danger }
+                    let (:direct_path) { user_path(admin) }
+                    let (:direct_http_method) { :delete }
+                end
             end
-        end
+	    end
     end
 end
