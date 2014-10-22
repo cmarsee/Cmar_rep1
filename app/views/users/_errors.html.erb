@@ -1,8 +1,8 @@
 <%if @user.errors.any? %>
-	<p class="ALERT-danger">The form has <%= pluralize(@user.errors.count, "error")%>.</p>
+	<p>The form has <%= pluralize(@user.errors.count, "error")%>.</p>
 	<ul>
 		<% @user.errors.full_messages.each do |message| %>
-			<li><%= message %></li>
+			<li class="alert alert-danger" role="alert"><%= message %></li>
 		<% end %>
 	</ul>
 <% end %>
