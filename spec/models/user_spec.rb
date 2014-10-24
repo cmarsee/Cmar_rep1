@@ -10,24 +10,24 @@ describe User do
     it { should respond_to(:password_digest) }
     it { should respond_to(:authenticate) }
   
-  it { should respond_to(:church) }
-  it { should respond_to(:user_rides) }
-  it { should respond_to(:rides) }
-  it { should respond_to(:rides_provided) }
-  
+    it { should respond_to(:church) }
+    it { should respond_to(:user_rides) }
+    it { should respond_to(:rides) }
+    it { should respond_to(:rides_provided) }
+
     it { should be_valid }
     it { should_not be_admin }
 
     describe "empty name" do
-	before { user.name = '' }
+	    before { user.name = '' }
 
-	it { should_not be_valid }
+	    it { should_not be_valid }
     end
 
     describe "blank name" do
-	before { user.name = ' ' }
+	    before { user.name = ' ' }
 
-	it { should_not be_valid }
+	    it { should_not be_valid }
     end
 
     describe "empty email" do
@@ -37,9 +37,9 @@ describe User do
     end
 
     describe "blank email" do
-	before { user.email = ' ' }
+	    before { user.email = ' ' }
 
-	it { should_not be_valid }
+	    it { should_not be_valid }
     end
 
     describe "empty password" do
@@ -49,17 +49,17 @@ describe User do
     end
 
     describe "blank password" do
-	let (:unsaved_user) {
+	    let (:unsaved_user) {
         FactoryGirl.build(:user, password: ' ') }
 
-	specify  { expect(unsaved_user).not_to be_valid }
+	    specify  { expect(unsaved_user).not_to be_valid }
 
     end
 
     describe "long name" do
-	before { user.name = 'a' * 51 }
+	    before { user.name = 'a' * 51 }
 
-	it { should_not be_valid }
+	    it { should_not be_valid }
     end
 
     describe "duplicate name" do

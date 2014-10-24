@@ -8,5 +8,23 @@ FactoryGirl.define do
         factory :admin do
             admin true
         end
-	end
+	  end
+  
+    factory :church do
+      user
+    end
+
+    factory :service do
+      church
+    end
+
+    factory :ride do
+      user
+      service
+    end
+
+    factory :user_ride do
+      user
+      ride
+    end
 end

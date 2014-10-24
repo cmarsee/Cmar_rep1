@@ -12,6 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20141020141121) do
+#ActiveRecord::Schema.define(version: 20140521175627) do
 
   create_table "churches", force: true do |t|
     t.integer  "user_id"
@@ -24,6 +25,13 @@ ActiveRecord::Schema.define(version: 20141020141121) do
   end
 
   add_index "churches", ["user_id"], name: "index_churches_on_user_id"
+
+  create_table "locking_examples", force: true do |t|
+    t.string   "name"
+    t.integer  "lock_version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "rides", force: true do |t|
     t.integer  "user_id"
