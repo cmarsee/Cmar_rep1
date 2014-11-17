@@ -68,12 +68,32 @@ describe 'AuthorizationPages' do
 		            let (:direct_http_method) { :patch }
 		        end
         
-                it_behaves_like "redirect to root", skip_browser: true do
-                    let (:direct_path) { user_path(user) }
-                    let (:direct_http_method) { :delete }
-                end
-            end
-        end
+		it_behaves_like "redirects to root", skip_browser: true do
+		    let (:direct_path) { user_path(user) }
+		    let (:direct_http_method) { :delete }
+		end
+	    end
+	end
+
+	describe "for Churches controller" do
+	    describe "edit action" do
+		let (:church) { FactoryGirl.create(:church) }
+		let (:login_user) { FactoryGirl.create(:user) }
+		let (:error_type) { :danger }
+
+		it_behaves_like "redirects to root" do
+		    let (:browser_path) { edit_church_path(church) }
+		    let (:error_signature) { 'Edit church profile' }
+		    let (:direct_path) { church_path(church) }
+		    let (:direct_http_method) { :patch }
+		end
+
+		it_behaves_like "redirects to root", skip_browser: true do
+		    let (:direct_path) { church_path(church) }
+		    let (:direct_http_method) { :delete }
+		end
+	    end
+	end
     end
     describe "admin user" do
         let (:admin) {FactoryGirl.create(:admin) }
