@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
+    root 'users#index'
+
+  resources :users
+  resources :rides
+  resources :churches
+  resources :services
+
+  get 'login', to: 'logins#new', as: :login
+  post 'login', to: 'logins#create', as: :logins
+  delete 'logout', to: 'logins#destroy', as: :logout
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
+    
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
