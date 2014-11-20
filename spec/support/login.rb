@@ -38,7 +38,7 @@ shared_examples "redirects to a login" do |options|
 	end
     end
 end
-shared_examples "redirect to root" do |options|
+shared_examples "redirects to root" do |options|
     options ||= {}
     options.merge!(skip_browser: false, direct_access: true) {|k, v1, v2| v1}
     

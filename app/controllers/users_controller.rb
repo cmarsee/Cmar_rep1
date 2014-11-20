@@ -25,9 +25,9 @@ class UsersController < ApplicationController
 	
 	def show
 		@user = User.find(params[:id])
-	rescue
-		flash[:danger] = "Unable to find user"
-		redirect_to users_path
+	  rescue
+		  flash[:danger] = "Unable to find user"
+		  redirect_to users_path
     end
 	
 	def edit

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe "Church Pages" do
-    subject { page }
+  subject { page }
 
-    describe "show churches" do
-	describe "individually" do
+  describe "show churches" do
+	  describe "individually" do
 	    let (:church) { FactoryGirl.create(:church) }
 
 	    before { visit church_path(church) }
@@ -13,37 +13,37 @@ describe "Church Pages" do
 	    it { should have_link('official web site', href: church.web_site) }
 	    it { should have_xpath('//img') } # church.picture
 	    it { should have_content(church.description) }
-	end
+	  end
 
 	describe "non-existant", type: :request do
-	    before { get church_path(-1) }
+	  before { get church_path(-1) }
 
-	    specify { expect(response).to redirect_to(churches_path) }
+	  specify { expect(response).to redirect_to(churches_path) }
 
-	    describe "follow redirect" do
-		before { visit church_path(-1) }
+	  describe "follow redirect" do
+		  before { visit church_path(-1) }
 
-		it { should have_alert(:danger, text: "Unable") }
-	    end
+		  it { should have_alert(:danger, text: "Unable") }
+	  end
 	end
 
 	describe "all" do
-	    before do
-		25.times { |i| FactoryGirl.create(:church) }
-		visit churches_path
-	    end
+	  before do
+		  25.times { |i| FactoryGirl.create(:church) }
+		  visit churches_path
+	   end
 
 	    it { should have_content('List of churches') }
 	    it { should have_content('25 churches') }
 
-	    it "should show all churches" do
-		Church.all.each do |church|
+	  it "should show all churches" do
+		  Church.all.each do |church|
 		    should have_selector('li', text: church.name)
 		    should have_link(church.name, href: church_path(church))
-		end
-	    end
-	end
-    end
+		  end
+	  end
+  end
+end
 
 #    describe "creating user" do
 #	let (:submit) { 'Create new user' }

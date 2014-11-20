@@ -1,0 +1,11 @@
+<%= f.label :name, "Church name" %>
+<%= f.text_field :name %>
+
+<%= f.label :picture %>
+<%= f.file_field :picture %>
+
+<%= f.label :web_site %>
+<%= f.text_field :web_site %>
+
+<%= f.label :description, "Description" %>
+<%= f.text_area_tag(:description, "Church description", size: "24x6") %>

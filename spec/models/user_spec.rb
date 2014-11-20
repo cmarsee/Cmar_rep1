@@ -31,9 +31,9 @@ describe User do
     end
 
     describe "empty email" do
-	before { user.email = '' }
+	    before { user.email = '' }
 
-	it { should_not be_valid }
+	    it { should_not be_valid }
     end
 
     describe "blank email" do
@@ -43,30 +43,30 @@ describe User do
     end
 
     describe "accepts valid email addresses" do
-	valid_addresses = %w[user@example.com
-			     USER@foo.COM
-			     A_US-ER@foo.bar.org
-			     first.last@foo.jp
-			     alice+bob@baz.cn]
-	it "should accept each address" do
-	    valid_addresses.each do |email|
-		user.email = email
-		should be_valid
+	    valid_addresses = %w[user@example.com
+			                     USER@foo.COM
+			                     A_US-ER@foo.bar.org
+			                     first.last@foo.jp
+			                     alice+bob@baz.cn]
+	    it "should accept each address" do
+	        valid_addresses.each do |email|
+		        user.email = email
+		        should be_valid
+	        end
 	    end
-	end
     end
 
     describe "rejects invalid email addresses" do
-	invalid_addresses = %w[user@example,com
-			       user_at_foo.org
-                               foo@bar_baz.com
-			       foo@bar+baz.com]
-	it "should reject each address" do
-	    invalid_addresses.each do |email|
-		user.email = email
-		should be_invalid
-	    end
-	end
+	    invalid_addresses = %w[user@example,com
+			                       user_at_foo.org
+                             foo@bar_baz.com
+			                       foo@bar+baz.com]
+	    it "should reject each address" do
+	      invalid_addresses.each do |email|
+		      user.email = email
+		      should be_invalid
+	      end
+      end
     end
 
     describe "empty password" do
@@ -84,46 +84,45 @@ describe User do
     end
 
     describe "acceptable long name" do
-	before { user.name = 'b' * 50 }
+	    before { user.name = 'b' * 50 }
 
-	it { should be_valid }
+	    it { should be_valid }
     end
 
     describe "too long name" do
-	before { user.name = 'a' * 51 }
+	    before { user.name = 'a' * 51 }
 
 	    it { should_not be_valid }
     end
 
     describe "duplicate name" do
-	let(:duplicate) do
-	    d = user.dup
-	    d.email = 'duplicate@example.com'
-	    d.password = 'new_password'
-	    d
-	end
+	    let(:duplicate) do
+	      d = user.dup
+	      d.email = 'duplicate@example.com'
+	      d.password = 'new_password'
+	      d
+	    end
 
-	it "is not allowed" do
-	    expect(duplicate).not_to be_valid
-	end
+	    it "is not allowed" do
+	      expect(duplicate).not_to be_valid
+	    end
     end
 
     describe "duplicate email" do
-	let(:duplicate) do
-	    d = user.dup
-	    d.name = 'Jane Doe'
-	    d.password = 'new_password'
-	    d
-	end
+	    let(:duplicate) do
+	      d = user.dup
+	      d.name = 'Jane Doe'
+	      d.password = 'new_password'
+	      d
+	    end
 
-	it "is not allowed" do
-	    expect(duplicate).not_to be_valid
-	end
+	    it "is not allowed" do
+	      expect(duplicate).not_to be_valid
+	    end
     end
     describe "administrator account" do
         let (:admin) { FactoryGirl.create(:admin) }
         
         specify { expect(admin).to be_admin }
     end
-
 end

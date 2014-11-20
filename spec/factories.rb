@@ -12,10 +12,12 @@ FactoryGirl.define do
   
     factory :church do
       user
+      web_site "www.officialwebsite.com"
     end
 
     factory :service do
       church
+      day_of_week "Monday"
     end
 
     factory :ride do
