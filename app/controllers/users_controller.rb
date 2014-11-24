@@ -89,11 +89,11 @@ class UsersController < ApplicationController
         end
         @user = User.find(params[:id])
         if current_user?(@user) 
-            flash[:danger] = "Unable to self"
-            redir = true
+          flash[:danger] = "Unable to delete self"
+          redir = true
         end
         if redir
-            redirect_to root_path
+          redirect_to root_path
         end
     end
 end

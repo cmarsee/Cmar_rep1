@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :rides
-  resources :churches
-  resources :services
+  resources :churches, shallow: true do
+    resources :services
+  end
 
   get 'login', to: 'logins#new', as: :login
   post 'login', to: 'logins#create', as: :logins

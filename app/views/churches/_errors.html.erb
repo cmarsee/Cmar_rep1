@@ -1,8 +1,0 @@
-<%if @church.errors.any? %>
-	<p>The form has <%= pluralize(@church.errors.count, "error")%>.</p>
-	<ul>
-    <% @church.errors.full_messages.each do |message| %>
-			<li class="alert alert-danger" role="alert"><%= message %></li>
-		<% end %>
-	</ul>
-<% end %>
