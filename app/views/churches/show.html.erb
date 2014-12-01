@@ -1,4 +1,17 @@
 <h1>Profile Page for <%= @church.name %></h1>
 
-<p>Picture: <img><%= @church.picture %></img> </p>
+<p><img><%= @church.picture %></img> </p>
 <p>Link: <%= link_to 'official web site', @church.web_site %></p>
+<p> Church Description: <%= @church.description %> </P>
+
+<ol>
+<% @church.services.each do |service| %>
+  <div class = "service<%= service.id %>" >
+    <ul>
+      <li>Location: <%= service.location %> </li>
+      <li>Day of Week: <%= service.day_of_week %> </li>
+      <li>Start time: <%= service.start_time %> </li>
+      <li>Finish time: <%= service.finish_time %> </li>
+    </ul>
+<%end%>
+    </ol>

@@ -45,10 +45,10 @@ class UsersController < ApplicationController
 	end
     
     def destroy
-        @user = User.find(params[:id])
-            @user.destroy
-            flash[:success] = "#{@user.name} removed from the site"
-            redirect_to users_path
+      @user = User.find(params[:id])
+      @user.destroy
+      flash[:success] = "#{@user.name} removed from the site"
+      redirect_to users_path
     end
   
   private
@@ -88,7 +88,7 @@ class UsersController < ApplicationController
             redir = true
         end
         @user = User.find(params[:id])
-        if current_user?(@user) 
+        if current_user?(@user) && current_user.admin
           flash[:danger] = "Unable to delete self"
           redir = true
         end

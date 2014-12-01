@@ -1,6 +1,7 @@
 <li>
     <ul>
-	    <li>Name: <%= link_to church.name, church.name %></li>
+	    <li>Name: <%= church.name %>
+        <%= link_to "delete", church, method: :delete %></li>
       <li><%= link_to 'Church details', church %></li>
     </ul>
 </li>

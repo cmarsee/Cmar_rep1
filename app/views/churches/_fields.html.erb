@@ -1,27 +1,27 @@
-<%= f.label :name, 'Church Name' %>
-<%= f.text_field :name %>
+<p><%= f.label :name, 'Church Name:' %>
+  <%= f.text_field :name %></p>
 
-<%= f.label :web_site %>
-<%= f.text_field :web_site %>
+<p><%= f.label :web_site %>:
+<%= f.text_field :web_site %></p>
 
-<%= f.label :picture %>
-<%= f.text_field :picture %>
+<p><%= f.label :picture %>:
+<%= f.text_field :picture %></p>
 
-<%= f.label :description %>
-<%= f.text_area :description %>
+<p><%= f.label :description %>:
+<%= f.text_area :description %></p>
 
 <%= f.fields_for :services do |builder| %>
-    <%= builder.label :start_time %>
-    <%= builder.text_field :start_time %>
+    <p><%= builder.label :start_time %>:
+    <%= builder.text_field :start_time %></p>
 
-    <%= builder.label :finish_time %>
-    <%= builder.text_field :finish_time %>
+    <p><%= builder.label :finish_time %>:
+    <%= builder.text_field :finish_time %></p>
 
-    <%= builder.label :location %>
-    <%= builder.text_field :location %>
+    <p><%= builder.label :location %>:
+    <%= builder.text_field :location %></p>
 
-    <%= builder.label :day_of_week %>
-    <%= builder.text_field :day_of_week %>
+    <p><%= builder.label :day_of_week %>:
+    <%= builder.text_field :day_of_week %></p>
 <% end %>
 
 

@@ -5,12 +5,9 @@ describe 'Service Pages' do
 
   describe "show services" do
     describe "all" do
-      let (:church) { FactoryGirl.create(:church) }
+      let (:church) { FactoryGirl.create(:church, num_services: 25) }
 
-      before do
-        25.times { FactoryGirl.create(:service, church: church) }
-        visit church_services_path(church)
-       end
+      before { visit church_services_path(church) }
 
      it { should have_content('List of services') }
      it { should have_content('25 services') }

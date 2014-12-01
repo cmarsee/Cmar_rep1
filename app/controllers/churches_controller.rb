@@ -8,20 +8,20 @@ class ChurchesController < ApplicationController
   end
   
   def new
-	  @church = Church.new
-	  @church.services.build
+    @church = Church.new
+    @church.services.build
   end
 
   def create
-	  @church = Church.new(church_params)
-	  @church.user = current_user
-	  if @church.save
-	    flash[:success] = "Church created"
+    @church = Church.new(church_params)
+    @church.user = current_user
+    if @church.save
+      flash[:success] = "Church created"
       redirect_to @church
-	  else
-	    flash.now[:danger] = "Unable to create church"
-	    render 'new'
-	  end
+    else
+      flash.now[:danger] = "Unable to create church"
+      render 'new'
+    end
   end
   
   def show
@@ -32,7 +32,6 @@ class ChurchesController < ApplicationController
   end
   
   def edit
-    @church = Church.find(params[:id])
   end
   
   def update
@@ -49,7 +48,7 @@ class ChurchesController < ApplicationController
   def destroy
     @church = Church.find(params[:id])
     @church.destroy
-    flash[:success] = "#{@church.name} removed from the site"
+    flash[:success] = "#{@church.name} removed"
     redirect_to churches_path
   end
   
@@ -57,21 +56,25 @@ class ChurchesController < ApplicationController
 
   def church_params
 	  params.require(:church).permit(:name,
-				                           :web_site,
-				                           :description,
-				                           :picture,
+		                           :web_site,
+		                           :description,
+		                           :picture,
 				       services_attributes: [ :start_time,
-							                        :finish_time,
-							                        :location,
-                                       :day_of_week ] )
+					                        :finish_time,
+					                        :location,
+       				                    :day_of_week,
+                                 :id] )
     end
   
   def ensure_church_manager
     @church = Church.find(params[:id])
-    unless current_user?(@church.user)
+    unless current_user?(@church.user) || current_user.admin?
       flash[:danger] = "Only church manager can edit church profile"
       redirect_to root_path
-    end 
+    end
+    rescue
+		  flash[:danger] = "Unable to find church"
+      redirect_to churches_path
   end
     
 
