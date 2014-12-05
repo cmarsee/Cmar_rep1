@@ -6,8 +6,10 @@ describe "Church Pages" do
   describe "show churches" do
 	  describe "individually" do
 	    let (:church) { FactoryGirl.create(:church) }
-	    let! (:s) { [] }
-	    let! (:t) { [] }
+	    let!(:s) { FactoryGirl.create_list(:service, 10, church: church) }
+	    let!(:t) { FactoryGirl.create_list(:service, 10) }
+	    let!(:attendees) { FactoryGirl.create_list(:user, 25, church: church) }
+	    let (:attend) { 'Attend this church' }
 
 	  before do
 		  10.times { |i| s << FactoryGirl.create(:service, church: church) }
@@ -15,6 +17,7 @@ describe "Church Pages" do
 
 		  visit church_path(church)
 	  end
+	  before { visit church_path(church) }
 
 	  it { should have_content(church.name) }
 	  it { should have_link('official web site', href: church.web_site) }
@@ -25,10 +28,10 @@ describe "Church Pages" do
 	  it "should show connected services" do
 		  s.each do |service|
 		    within("div.service#{service.id}") do
-			    have_content(service.start_time)
-			    have_content(service.finish_time)
-			    have_content(service.location)
-			    have_content(service.day_of_week)
+			    should have_content(service.start_time)
+			    should have_content(service.finish_time)
+			    should have_content(service.location)
+			    should have_content(service.day_of_week)
 		    end
 		  end
 	  end
@@ -36,6 +39,39 @@ describe "Church Pages" do
 	  it "should not show services for other churches" do
 		  t.each do |service|
 		    should_not have_selector("div.service#{service.id}")
+		  end
+	  end
+
+	  it "should show attendees" do
+		  attendees.each do |attendee|
+		    within("div.user#{attendee.id}") do
+			    should have_link(attendee.name, href: user_path(attendee))
+		    end
+		  end
+	  end
+
+	  it { should_not have_button(attend) }
+
+	  describe "choose to attend this church" do
+		  let (:user) { FactoryGirl.create(:user) }
+		  let!(:orig_num_users) { church.users.count }
+
+		  before do
+		    login user
+		    visit church_path(church)
+		  end
+
+		  it { should have_button(attend) }
+
+		  it "produces a 'church attended' message" do
+		    click_button attend
+		    should have_alert(:success)
+		  end
+
+		  it "adds the user to the attendee list" do
+		    click_button attend
+        expect(church.reload.users).to include(user)
+		    expect(church.reload.users.count).to eq(orig_num_users + 1)
 		  end
 	  end
 	end

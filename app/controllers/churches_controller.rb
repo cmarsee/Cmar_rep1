@@ -63,7 +63,7 @@ class ChurchesController < ApplicationController
 					                        :finish_time,
 					                        :location,
        				                    :day_of_week,
-                                 :id] )
+                                  :id] )
     end
   
   def ensure_church_manager

@@ -1,0 +1,15 @@
+<h1>Ride for <%= @ride.service.church.name %> on <%= @ride.date %> </h1>
+
+<p><%= link_to @ride.user.name, user_path(@ride.user) %> </p>
+<p>Location of service: <%= @ride.service.location %> </p>
+<p>Leave time: <%= @ride.leave_time %></p>
+<p>Return time: <%= @ride.return_time %></p>
+<p>Leaving from: <%= @ride.meeting_location %></p>
+<p>Vehicle: <%= @ride.vehicle %></p>
+
+<p>Seats avalible: <%= @ride.seats_available %></p>
+
+<% if logged_in? %>
+<%= button_to "Claim ride", user_path(current_user, ride_id: @ride.id), { method: :patch} %>
+<%end%>
+

@@ -6,12 +6,9 @@ class User < ActiveRecord::Base
   has_one :church
   #  if the chruch profile manager dosen't attend that church, use:
 #  has_one :chruch_managed, class_name: "Church", foreign_key: "user_id"
-  
-  has_secure_password
-    
-  has_one :church
-# if the church profile manager doesn't attend that church, use:
-#    has_one :church_managed, class_name: 'Church', foreign_key: 'user_id'
+
+    belongs_to :church, inverse_of: :users
+    has_one :church_managed, inverse_of: :user, class_name: 'Church', foreign_key: 'user_id'
 
     has_secure_password
 
@@ -24,5 +21,5 @@ class User < ActiveRecord::Base
 			                 [-a-z\d.]+ # dash, letter, digit, or dot chars
 			                 \z         # end of input
 		                  /xi }
-    validates :password, presence: true
+  validates :password, presence: true, on: :create
 end

@@ -35,13 +35,31 @@ class UsersController < ApplicationController
 	
 	def update
 		@user = User.find(params[:id])
-        if @user.update(user_params)
-			flash[:success] = "You have modified your profile"
-			redirect_to @user
-		else
-			flash[:danger] = "Unable to update your profile"
-			render 'edit'
-		end
+    if params[:church_id]
+      @user.church_id = params[:church_id]
+      flash[:success] = "Now attending Church"
+      @user.save
+      redirect_to @user.church
+    elsif params[:ride_id]
+      @ride = Ride.find(params[:ride_id])
+      @user.rides << @ride
+      @ride.seats_available = @ride.seats_available - 1
+      flash[:success] = "Now have a ride to Church"
+      @user.save
+      @ride.save
+      redirect_to @ride
+    else
+      if @user.update(user_params)
+			  flash[:success] = "You have modified your profile"
+			  redirect_to @user
+		  else
+			  flash[:danger] = "Unable to update your profile"
+			  render 'edit'
+		  end
+    end
+    rescue
+    flash[:danger] = "Something went wrong"
+		  redirect_to root_path
 	end
     
     def destroy
@@ -53,7 +71,7 @@ class UsersController < ApplicationController
   
   private
     def user_params
-        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :church_id)
     end
     
     def ensure_user_logged_in

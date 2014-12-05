@@ -11,5 +11,36 @@ class ServicesController < ApplicationController
       @services = Service.order(:start_time)
     end
   end
+  
+  def show
+    @service = Service.find(params[:id])
+    rescue
+      flash[:danger] = "Unable to find service"
+      redirect_to services_path
+  end
+  
+  def update
+    @service = Service.find(params[:id])
+    if @service.update(service_params)
+      flash[:success] = "You have modified the service profile"
+      redirect_to @service.church
+		else
+      flash[:danger] = "Unable to update the service profile"
+			render 'edit'
+		end
+  end
+  
+  def edit
+  end
+  
+  private
+  def service_params
+    params.require(:service).permit(:start_time,
+					                        :finish_time,
+					                        :location,
+       				                    :day_of_week,
+                                  :id )
+              #rides_attributes: [ :id] )
+  end
 end
 

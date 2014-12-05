@@ -1,17 +1,34 @@
-<h1>Profile Page for <%= @church.name %></h1>
+<h1>Church Page for <%= @church.name %></h1>
 
-<p><img><%= @church.picture %></img> </p>
+<p> <img><%= @church.picture %></img> </p>
 <p>Link: <%= link_to 'official web site', @church.web_site %></p>
-<p> Church Description: <%= @church.description %> </P>
+<p>Church Description: <%= @church.description %> </p>
+
+<% if logged_in? %>
+<%= button_to "Attend this church", user_path(current_user, church_id: @church.id), { method: :patch} %>
+
+<%end%>
 
 <ol>
-<% @church.services.each do |service| %>
-  <div class = "service<%= service.id %>" >
-    <ul>
-      <li>Location: <%= service.location %> </li>
-      <li>Day of Week: <%= service.day_of_week %> </li>
-      <li>Start time: <%= service.start_time %> </li>
-      <li>Finish time: <%= service.finish_time %> </li>
-    </ul>
-<%end%>
-    </ol>
+  <% @church.services.each do |services| %>
+    <div class = "service<%= services.id %>" >
+      <li><%= link_to "Service Page", service_path(services) %> </li>    
+      <ul>
+        <li>Location:<%=services.location%></li>
+        <li>Day of Week: <%= services.day_of_week %> </li>
+        <li>Start time: <%= services.start_time %> </li>
+        <li>Finish time: <%= services.finish_time %> </li>
+      </ul>
+  </div>
+  <%end%>
+</ol>
+
+
+<p>Attendees List</p>
+<ol>
+  <% @church.users.each do |attendees| %>
+    <div class = "user<%= attendees.id %>" >
+      <li><%= link_to attendees.name, user_path(attendees) %></li> 
+    </div>
+  <%end%>
+</ol>

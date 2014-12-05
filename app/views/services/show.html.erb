@@ -1,0 +1,32 @@
+<h1>Service page from Church <%@service.church.name%> </h1>
+
+<p>Location: <%= @service.location %></p>
+<p>Day service is held: <%= @service.day_of_week %></p>
+<p>Start time: <%= @service.start_time %></p>
+<p>Finish time: <%= @service.finish_time %></p>
+
+<% if @service.rides.count >= 1 %>
+  <p>Rides avalible</p>
+  <ol>
+    <% @service.rides.each do |ride| %>
+      <div class = "ride<%= ride.id %>" >
+        <li><%= ride.date %> </li>
+        <li><%= ride.meeting_location %> </li>
+        <li><%= link_to "more info", ride_path(ride) %></li>
+      </div>
+    <%end%>
+  </ol>
+<% else %>
+<p>No rides currently avalible</p>
+<% end %>
+
+<% if logged_in? %>
+  <%= render 'shared/errors', object: @service %>
+
+<%= form_for [@service, @service.rides.build] do |form| %>
+    <%= render partial: "rides/fields", locals: { f: form } %>
+
+    <%= form.submit "Offer ride" %>
+  <% end %>
+<% end %>
+

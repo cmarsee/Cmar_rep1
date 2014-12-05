@@ -1,9 +1,10 @@
 <li>
     <ul>
-	    <li>From: <%= link_to ride.user.name, ride.user %></li>
+      <li>Driver: <%= link_to ride.user.name, user_path(ride.user) %></li>
+      <li>From: ride.meeting_location </li>
 	    <li>To: <%= ride.service.church.name %></li>
-	    <li>Service: <%= ride.service.location %> @ <%= ride.service.start_time %></li>
-	    <li>Date: <%= ride.date %>
-	    <li><%= link_to 'Ride details', ride %></li>
+	    <li>Service: <%= ride.service.location %> at <%= ride.service.start_time %></li>
+      <li>Date: <%= ride.date %></li>
+      <li><%= link_to 'Ride details', ride %></li>
     </ul>
 </li>

@@ -27,11 +27,23 @@ FactoryGirl.define do
       start_time "9:00"
       finish_time "10:00"
       location "Sanctuary"
+	transient { num_rides 1 }
+
+	after(:create) do |service, evaluator|
+	    create_list(:ride, evaluator.num_rides, service: service)
+	end
     end
 
     factory :ride do
       user
       service
+      date "2100-11-12"
+      leave_time "7:00"
+      return_time "8:00"
+      number_of_seats "2"
+      seats_available "1"
+      meeting_location "moon"
+      vehicle "Nissan"
     end
 
     factory :user_ride do
