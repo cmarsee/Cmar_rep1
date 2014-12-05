@@ -1,4 +1,7 @@
 class ServicesController < ApplicationController
+  before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update]
+  
   def index
     order_param = (params[:order] || :Day).to_sym
     case order_param
@@ -40,7 +43,24 @@ class ServicesController < ApplicationController
 					                        :location,
        				                    :day_of_week,
                                   :id )
-              #rides_attributes: [ :id] )
   end
+  
+  def ensure_user_logged_in
+        unless current_user
+            flash[:warning] = "Not logged in"
+            redirect_to login_path
+        end
+    end
+  
+      def ensure_correct_user
+	    @user = User.find(params[:id])
+	    unless current_user?(@user)
+            flash[:danger] = "Cannot edit other user's profiles"
+	        redirect_to root_path
+	    end
+    rescue
+	    flash[:danger] = "Unable to find user"
+	    redirect_to users_path
+    end
 end
 
