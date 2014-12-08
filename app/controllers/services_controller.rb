@@ -1,5 +1,5 @@
 class ServicesController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
+  before_action :ensure_user_logged_in, only: [:edit, :update]
   before_action :ensure_correct_user, only: [:edit, :update]
   
   def index
@@ -53,14 +53,14 @@ class ServicesController < ApplicationController
     end
   
       def ensure_correct_user
-	    @user = User.find(params[:id])
-	    unless current_user?(@user)
+        @service = service.find(params[:id])
+        unless current_user?(@service.user)
             flash[:danger] = "Cannot edit other user's profiles"
-	        redirect_to root_path
+          redirect_to root_path
 	    end
     rescue
 	    flash[:danger] = "Unable to find user"
-	    redirect_to users_path
+        redirect_to services_path
     end
 end
 

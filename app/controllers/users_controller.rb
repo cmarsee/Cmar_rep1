@@ -59,7 +59,7 @@ class UsersController < ApplicationController
     end
     rescue
     flash[:danger] = "Something went wrong"
-		  redirect_to root_path
+		  redirect_to user_path(@user)
 	end
     
     def destroy

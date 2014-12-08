@@ -1,6 +1,6 @@
 class RidesController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
-  before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_user_logged_in, only: [:new, :create, :destroy, :edit, :update]
+  before_action :ensure_correct_user, only: [:destroy, :edit, :update]
   
   def index
     @service = Service.find(params[:service_id])
@@ -16,22 +16,16 @@ class RidesController < ApplicationController
   
   def show
     @ride = Ride.find(params[:id])
+#    redirect_to @ride
     rescue
     flash[:danger] = "Unable to find ride"
     redirect_to rides_path
   end
   
-#  def new
-#    @ride = Ride.new
-#  end
-  
   def create
     @service = Service.find(params[:service_id])
     @ride = @service.rides.build(ride_params)
     @ride.user = current_user
-#    puts @ride.date
-#    puts @ride.user
-#    puts current_user
     if @ride.save
       flash[:success] = "Ride created"
       redirect_to @ride
@@ -39,6 +33,30 @@ class RidesController < ApplicationController
       flash.now[:danger] = "Unable to create ride"
       render 'new'
     end
+  end
+  
+  def edit
+  end
+  
+  def update
+    @ride = Ride.find(params[:id])
+    if @ride.update(ride_params)
+      flash[:success] = "You have modified the this rides profile"
+      redirect_to @ride
+		else
+      flash[:danger] = "Unable to update theis rides profile"
+			render 'edit'
+		end
+#  rescue
+#    flash[:warning] = "Please login"
+#		  redirect_to churches_path
+	end
+  
+  def destroy
+    @ride = Ride.find(params[:id])
+    @ride.destroy
+    flash[:success] = "This ride removed"
+    redirect_to rides_path
   end
   
   
@@ -55,14 +73,14 @@ private
   end
   
   def ensure_correct_user
-	  @user = User.find(params[:id])
-	  unless current_user?(@user)
+    @ride = ride.find(params[:id])
+    unless current_user?(@ride.user)
       flash[:danger] = "Cannot edit other user's profiles"
 	    redirect_to root_path
 	  end
   rescue
-	  flash[:danger] = "Unable to find user"
-	  redirect_to users_path
+    flash[:danger] = "Unable to find ride"
+    redirect_to rides_path
   end
     
 end

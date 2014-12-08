@@ -35,9 +35,10 @@ shared_examples "redirects to a login" do |options|
 #before { puts direct_http_method.to_s + ": " + direct_path }
 
 	    specify { expect_redirect_with_alert(login_path, :warning) }
-	end
+      end
     end
 end
+
 shared_examples "redirects to root" do |options|
     options ||= {}
     options.merge!(skip_browser: false, direct_access: true) {|k, v1, v2| v1}

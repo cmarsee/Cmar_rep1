@@ -1,5 +1,5 @@
 class ChurchesController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:new, :create]
+  before_action :ensure_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
 #  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   before_action :ensure_church_manager, only: [:edit, :update, :destroy]
   
@@ -43,6 +43,9 @@ class ChurchesController < ApplicationController
       flash[:danger] = "Unable to update the church profile"
 			render 'edit'
 		end
+#  rescue
+#    flash[:warning] = "Please login"
+#		  redirect_to churches_path
 	end
   
   def destroy
@@ -73,7 +76,7 @@ class ChurchesController < ApplicationController
       redirect_to root_path
     end
     rescue
-		  flash[:danger] = "Unable to find church"
+    flash[:danger] = "Unable to find church"
       redirect_to churches_path
   end
     
@@ -82,17 +85,17 @@ class ChurchesController < ApplicationController
 #  def ensure_correct_user
 #	  @user = User.find(params[:id])
 #	  unless current_user?(@user)
-#     flash[:danger] = "Cannot edit other user's church profiles"
+#     flash[:warning] = "Cannot edit other user's church profiles"
 #      redirect_to @church
 #	  end
 #    rescue
-#	    flash[:danger] = "Unable to find user"
+#	    flash[:warning] = "Unable to find user"
 #	    redirect_to users_path
 #  end
   
     def ensure_user_logged_in
     unless current_user
-      flash[:warning] = "Not logged in"
+      flash[:warning] = "Not logged in, please Sign In"
       redirect_to login_path
     end
   end
