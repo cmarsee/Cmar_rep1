@@ -42,12 +42,17 @@ class UsersController < ApplicationController
       redirect_to @user.church
     elsif params[:ride_id]
       @ride = Ride.find(params[:ride_id])
-      @user.rides << @ride
-      @ride.seats_available = @ride.seats_available - 1
-      flash[:success] = "Now have a ride to Church"
-      @user.save
-      @ride.save
-      redirect_to @ride
+      if @ride.seats_available.to_i > 0
+        @user.rides << @ride
+        @ride.seats_available = @ride.seats_available - 1
+        flash[:success] = "Now have a ride to Church"
+        @user.save
+        @ride.save
+        redirect_to @ride
+      else
+        flash[:danger] = "Ride is full"
+        render_to @ride
+      end
     else
       if @user.update(user_params)
 			  flash[:success] = "You have modified your profile"
